@@ -65,6 +65,8 @@ void PixelPusher::updateProperty(PixelPusher *pusher) {
 
 int PixelPusher::getStripLength() { return strips.size(); }
 
+int PixelPusher::getPixelLength() { return pixelsPerStrip; }
+
 vector<LedStrip *> PixelPusher::getStrips() { return strips; }
 
 vector<uint8_t> *PixelPusher::serialize() {
@@ -73,8 +75,10 @@ vector<uint8_t> *PixelPusher::serialize() {
     packet.push_back((packetNumber >> 8) & 0xff);
     packet.push_back((packetNumber >> 16) & 0xff);
     packet.push_back((packetNumber >> 24) & 0xff);
-    for (int i = 0; i < strips.size(); i++) {
-        strips[i]->serialize(packet);
+    for (int i = 0, n = 0; i < strips.size() && n < maxStripsPerPacket; i++) {
+        if (strips[i]->serialize(packet)) {
+            n++;
+        }
     }
 
     if (packet.size() > 4) {

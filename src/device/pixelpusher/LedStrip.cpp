@@ -57,9 +57,9 @@ void LedStrip::setPixel(int position, LedPixel *pixel) {
     }
 }
 
-void LedStrip::serialize(vector<uint8_t> &packet) {
+bool LedStrip::serialize(vector<uint8_t> &packet) {
     if (!touched) {
-        return;
+        return false;
     }
 
     touched = false;
@@ -69,4 +69,5 @@ void LedStrip::serialize(vector<uint8_t> &packet) {
         packet.push_back((uint8_t)(pixels[i]->green * powerScale));
         packet.push_back((uint8_t)(pixels[i]->blue * powerScale));
     }
+    return true;
 }

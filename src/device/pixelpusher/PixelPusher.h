@@ -27,6 +27,11 @@ class PixelPusher : public Device {
     int getStripLength();
 
     /**
+     * 1本あたりのLEDの数を取得
+     */
+    int getPixelLength();
+
+    /**
      * つながっているLEDストリップを取得
      */
     vector<LedStrip *> getStrips();

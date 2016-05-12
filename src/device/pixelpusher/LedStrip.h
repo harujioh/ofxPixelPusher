@@ -53,7 +53,7 @@ class LedStrip {
     /**
      * シリアライズする
      */
-    void serialize(vector<uint8_t> &packet);
+    bool serialize(vector<uint8_t> &packet);
 
    private:
     /**

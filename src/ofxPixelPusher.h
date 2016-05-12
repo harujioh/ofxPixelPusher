@@ -33,6 +33,11 @@ class ofxPixelPusher {
      */
     void setColor(int groupIndex, int controllerIndex, int ledIndex, int position, ofColor color);
 
+    /**
+     * 指定のPixelPusherの指定ピクセルの色を設定
+     */
+    void setColor(int groupIndex, int controllerIndex, int ledIndex, vector<ofColor> &color);
+
    private:
     /**
      * PixelPusher探すインスタンス

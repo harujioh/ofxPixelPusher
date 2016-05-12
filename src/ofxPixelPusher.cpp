@@ -30,6 +30,21 @@ void ofxPixelPusher::setColor(int groupIndex, int controllerIndex, int ledIndex,
     mtx.unlock();
 }
 
+void ofxPixelPusher::setColor(int groupIndex, int controllerIndex, int ledIndex, vector<ofColor> &colors) {
+    mtx.lock();
+
+    for (auto it : pusherUnits) {
+        ofxPixelPusherUnit *pusherUnit = it.second;
+        if (pusherUnit->isInGroup(groupIndex, controllerIndex)) {
+            for (int i = 0, l = MIN(colors.size(), pusherUnit->getPixelLength()); i < l; i++) {
+                pusherUnit->setColor(ledIndex, i, colors[i]);
+            }
+        }
+    }
+
+    mtx.unlock();
+}
+
 void ofxPixelPusher::updateDevice(ofxDeviceRegistry &deviceRegistry) {
     mtx.lock();
 

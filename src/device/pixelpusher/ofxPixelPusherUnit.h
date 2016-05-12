@@ -29,6 +29,16 @@ class ofxPixelPusherUnit : public ofThread {
     void threadedFunction();
 
     /**
+     * つながっているLEDストリップの数を取得
+     */
+    int getStripLength();
+
+    /**
+     * 1本あたりのLEDの数を取得
+     */
+    int getPixelLength();
+
+    /**
      * 特定のPixelPusherかチェックする
      */
     bool isInGroup(int groupIndex, int controllerIndex = -1);

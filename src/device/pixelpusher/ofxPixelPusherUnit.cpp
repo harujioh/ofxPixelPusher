@@ -56,6 +56,10 @@ void ofxPixelPusherUnit::threadedUpdate() {
     }
 }
 
+int ofxPixelPusherUnit::getStripLength() { return this->pusher->getStripLength(); }
+
+int ofxPixelPusherUnit::getPixelLength() { return this->pusher->getPixelLength(); }
+
 bool ofxPixelPusherUnit::isInGroup(int groupIndex, int controllerIndex) {
     if (pusher->groupOrdinal != groupIndex) {
         return false;
