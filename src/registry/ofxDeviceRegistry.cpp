@@ -3,11 +3,12 @@
 ofxDeviceRegistry::ofxDeviceRegistry() {}
 
 ofxDeviceRegistry::~ofxDeviceRegistry() {
-    mtx.lock();
-    stopThread();
-    while (isThreadRunning())
-        ;
-    mtx.unlock();
+    if (lock()) {
+        stopThread();
+        while (isThreadRunning())
+            ;
+    }
+    unlock();
 
     for (PixelPusher *pusher : pushers) {
         delete pusher;
@@ -31,8 +32,8 @@ void ofxDeviceRegistry::threadedFunction() {
     while (isThreadRunning()) {
         if (lock()) {
             threadedUpdate();
-            unlock();
             sleep(THREAD_INTERVAL);
+            unlock();
         }
     }
 }
