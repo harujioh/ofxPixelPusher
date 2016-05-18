@@ -26,17 +26,17 @@ class ofxPixelPusher {
     /**
      * 指定のPixelPusherの指定ピクセルの色を設定
      */
-    void setColor(int groupIndex, int controllerIndex, int ledIndex, ofColor color);
+    void setColor(int groupIndex, int controllerIndex, int ledIndex, ofColor color, float rate = 1.0f);
 
     /**
      * 指定のPixelPusherの指定ピクセルの色を設定
      */
-    void setColor(int groupIndex, int controllerIndex, int ledIndex, int position, ofColor color);
+    void setColor(int groupIndex, int controllerIndex, int ledIndex, int position, ofColor color, float rate = 1.0f);
 
     /**
      * 指定のPixelPusherの指定ピクセルの色を設定
      */
-    void setColor(int groupIndex, int controllerIndex, int ledIndex, vector<ofColor> &color);
+    void setColor(int groupIndex, int controllerIndex, int ledIndex, vector<ofColor> &color, float rate = 1.0f);
 
    private:
     /**
@@ -53,4 +53,9 @@ class ofxPixelPusher {
      * PixelPusherを実際にコントロールするクラス
      */
     map<string, ofxPixelPusherUnit *> pusherUnits;
+
+    /**
+     * 割合に応じた色を取得
+     */
+    ofColor getColor(ofColor color, float rate);
 };

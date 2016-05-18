@@ -4,9 +4,10 @@ ofxPixelPusher::ofxPixelPusher() { deviceRegistry.addEventListener(this); }
 
 void ofxPixelPusher::start() { deviceRegistry.start(); }
 
-void ofxPixelPusher::setColor(int groupIndex, int controllerIndex, int ledIndex, ofColor color) {
+void ofxPixelPusher::setColor(int groupIndex, int controllerIndex, int ledIndex, ofColor color, float rate) {
     mtx.lock();
 
+    color = getColor(color, rate);
     for (auto it : pusherUnits) {
         ofxPixelPusherUnit *pusherUnit = it.second;
         if (pusherUnit->isInGroup(groupIndex, controllerIndex)) {
@@ -17,9 +18,10 @@ void ofxPixelPusher::setColor(int groupIndex, int controllerIndex, int ledIndex,
     mtx.unlock();
 }
 
-void ofxPixelPusher::setColor(int groupIndex, int controllerIndex, int ledIndex, int position, ofColor color) {
+void ofxPixelPusher::setColor(int groupIndex, int controllerIndex, int ledIndex, int position, ofColor color, float rate) {
     mtx.lock();
 
+    color = getColor(color, rate);
     for (auto it : pusherUnits) {
         ofxPixelPusherUnit *pusherUnit = it.second;
         if (pusherUnit->isInGroup(groupIndex, controllerIndex)) {
@@ -30,14 +32,14 @@ void ofxPixelPusher::setColor(int groupIndex, int controllerIndex, int ledIndex,
     mtx.unlock();
 }
 
-void ofxPixelPusher::setColor(int groupIndex, int controllerIndex, int ledIndex, vector<ofColor> &colors) {
+void ofxPixelPusher::setColor(int groupIndex, int controllerIndex, int ledIndex, vector<ofColor> &colors, float rate) {
     mtx.lock();
 
     for (auto it : pusherUnits) {
         ofxPixelPusherUnit *pusherUnit = it.second;
         if (pusherUnit->isInGroup(groupIndex, controllerIndex)) {
             for (int i = 0, l = MIN(colors.size(), pusherUnit->getPixelLength()); i < l; i++) {
-                pusherUnit->setColor(ledIndex, i, colors[i]);
+                pusherUnit->setColor(ledIndex, i, getColor(colors[i], rate));
             }
         }
     }
@@ -68,4 +70,18 @@ void ofxPixelPusher::updateDevice(ofxDeviceRegistry &deviceRegistry) {
     }
 
     mtx.unlock();
+}
+
+ofColor ofxPixelPusher::getColor(ofColor color, float rate) {
+    if (rate <= 0) {
+        return ofColor::black;
+    }
+    if (rate >= 1) {
+        return color;
+    }
+
+    int r = (float)color.r * rate;
+    int g = (float)color.g * rate;
+    int b = (float)color.b * rate;
+    return ofColor(r, g, b);
 }
