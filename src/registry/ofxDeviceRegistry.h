@@ -69,6 +69,11 @@ class ofxDeviceRegistry : public ofThread {
      * UDPで受信するバッファサイズ
      */
     const int BUFFER_SIZE = 1024;
+    
+    /**
+     * スレッドの生存フラグ
+     */
+    bool alive = false;
 
     /**
      * PixelPusherが見つかったイベントの通知用インスタンス

@@ -3,12 +3,10 @@
 ofxDeviceRegistry::ofxDeviceRegistry() {}
 
 ofxDeviceRegistry::~ofxDeviceRegistry() {
-    if (lock()) {
-        stopThread();
-        while (isThreadRunning())
-            ;
+    stopThread();
+    while (alive) {
+        ofSleepMillis(1);
     }
-    unlock();
 
     for (PixelPusher *pusher : pushers) {
         delete pusher;
@@ -29,6 +27,7 @@ void ofxDeviceRegistry::start() {
 }
 
 void ofxDeviceRegistry::threadedFunction() {
+    alive = true;
     while (isThreadRunning()) {
         if (lock()) {
             threadedUpdate();
@@ -36,6 +35,7 @@ void ofxDeviceRegistry::threadedFunction() {
             unlock();
         }
     }
+    alive = false;
 }
 
 map<string, PixelPusher *> ofxDeviceRegistry::getPixelPusherMap() { return pusherMap; }
