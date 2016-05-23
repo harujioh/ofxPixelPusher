@@ -4,6 +4,33 @@ ofxPixelPusher::ofxPixelPusher() { deviceRegistry.addEventListener(this); }
 
 void ofxPixelPusher::start() { deviceRegistry.start(); }
 
+void ofxPixelPusher::setColor(ofColor color, float rate) {
+    mtx.lock();
+
+    color = getColor(color, rate);
+    for (auto it : pusherUnits) {
+        ofxPixelPusherUnit *pusherUnit = it.second;
+        for (int ledIndex = 0; ledIndex < 8; ledIndex++) {
+            pusherUnit->setColor(ledIndex, color);
+        }
+    }
+    ofLogNotice() << color;
+
+    mtx.unlock();
+}
+
+void ofxPixelPusher::setColor(int ledIndex, ofColor color, float rate) {
+    mtx.lock();
+
+    color = getColor(color, rate);
+    for (auto it : pusherUnits) {
+        ofxPixelPusherUnit *pusherUnit = it.second;
+        pusherUnit->setColor(ledIndex, color);
+    }
+
+    mtx.unlock();
+}
+
 void ofxPixelPusher::setColor(int groupIndex, int controllerIndex, int ledIndex, ofColor color, float rate) {
     mtx.lock();
 

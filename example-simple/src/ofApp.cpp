@@ -17,28 +17,19 @@ void ofApp::draw() {}
 void ofApp::keyReleased(int key) {
     switch (key) {
         case '1':
-            for (int i = 0; i < 256; i++) {
-                pixelPusher.setColor(2, 1, 0, ofColor(i, 0, 0));
-                ofSleepMillis(1);
-            }
+            pixelPusher.setColor(ofColor::red);
             break;
         case '2':
-            for (int i = 0; i < 256; i++) {
-                pixelPusher.setColor(2, 1, 0, ofColor(0, i, 0));
-                ofSleepMillis(1);
-            }
+            pixelPusher.setColor(ofColor::green);
             break;
         case '3':
-            for (int i = 0; i < 256; i++) {
-                pixelPusher.setColor(2, 1, 0, ofColor(0, 0, i));
-                ofSleepMillis(1);
-            }
+            pixelPusher.setColor(ofColor::blue);
             break;
         case '4':
-            pixelPusher.setColor(2, 1, 0, ofColor::white);
+            pixelPusher.setColor(ofColor::white);
             break;
         case '5':
-            pixelPusher.setColor(2, 1, 0, ofColor::black);
+            pixelPusher.setColor(ofColor::black);
             break;
         case '6':
             for (int i = 0; i < 256; i++) {

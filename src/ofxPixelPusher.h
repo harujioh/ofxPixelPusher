@@ -24,6 +24,16 @@ class ofxPixelPusher {
     void updateDevice(ofxDeviceRegistry &deviceRegistry);
 
     /**
+     * PixelPusherの指定ピクセルの色を設定
+     */
+    void setColor(ofColor color, float rate = 1.0f);
+
+    /**
+     * 指定のPixelPusherの指定ピクセルの色を設定
+     */
+    void setColor(int ledIndex, ofColor color, float rate = 1.0f);
+
+    /**
      * 指定のPixelPusherの指定ピクセルの色を設定
      */
     void setColor(int groupIndex, int controllerIndex, int ledIndex, ofColor color, float rate = 1.0f);
