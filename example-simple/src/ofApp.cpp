@@ -6,10 +6,35 @@ void ofApp::setup() {
     ofSetLogLevel(ofLogLevel::OF_LOG_VERBOSE);
 
     pixelPusher.start();
+
+    next = ofGetElapsedTimeMillis() + 1000;
 }
 
 //--------------------------------------------------------------
-void ofApp::update() {}
+void ofApp::update() {
+    uint64_t now = ofGetElapsedTimeMillis();
+    if (now >= next) {
+        next = now + 500;
+        switch (phase) {
+            case 0:
+                pixelPusher.setColor(ofColor::red);
+                break;
+            case 1:
+                pixelPusher.setColor(ofColor::green);
+                break;
+            case 2:
+                pixelPusher.setColor(ofColor::blue);
+                break;
+            case 3:
+                pixelPusher.setColor(ofColor::white);
+                break;
+            case 4:
+                pixelPusher.setColor(ofColor::black);
+                break;
+        }
+        phase = (phase + 1) % 5;
+    }
+}
 
 //--------------------------------------------------------------
 void ofApp::draw() {}

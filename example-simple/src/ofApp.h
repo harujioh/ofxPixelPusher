@@ -14,4 +14,7 @@ class ofApp : public ofBaseApp {
 
    private:
     ofxPixelPusher pixelPusher;
+    
+    uint64_t next;
+    uint8_t phase = 0;
 };
