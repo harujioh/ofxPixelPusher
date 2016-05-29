@@ -10,11 +10,10 @@ class ofApp : public ofBaseApp {
     void update();
     void draw();
 
-    void keyReleased(int key);
-
    private:
     ofxPixelPusher pixelPusher;
-    
-    uint64_t next;
+
     uint8_t phase = 0;
+
+    void fade(ofColor color, int delay = 10);
 };

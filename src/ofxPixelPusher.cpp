@@ -14,7 +14,6 @@ void ofxPixelPusher::setColor(ofColor color, float rate) {
             pusherUnit->setColor(ledIndex, color);
         }
     }
-    ofLogNotice() << color;
 
     mtx.unlock();
 }

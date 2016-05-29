@@ -6,73 +6,39 @@ void ofApp::setup() {
     ofSetLogLevel(ofLogLevel::OF_LOG_VERBOSE);
 
     pixelPusher.start();
-
-    next = ofGetElapsedTimeMillis() + 1000;
 }
 
 //--------------------------------------------------------------
 void ofApp::update() {
-    uint64_t now = ofGetElapsedTimeMillis();
-    if (now >= next) {
-        next = now + 500;
-        switch (phase) {
-            case 0:
-                pixelPusher.setColor(ofColor::red);
-                break;
-            case 1:
-                pixelPusher.setColor(ofColor::green);
-                break;
-            case 2:
-                pixelPusher.setColor(ofColor::blue);
-                break;
-            case 3:
-                pixelPusher.setColor(ofColor::white);
-                break;
-            case 4:
-                pixelPusher.setColor(ofColor::black);
-                break;
-        }
-        phase = (phase + 1) % 5;
+    switch (phase) {
+        case 0:
+            fade(ofColor::red);
+            break;
+        case 1:
+            fade(ofColor::green);
+            break;
+        case 2:
+            fade(ofColor::blue);
+            break;
+        case 3:
+            fade(ofColor::white);
+            break;
     }
+    phase = (phase + 1) % 4;
 }
 
 //--------------------------------------------------------------
 void ofApp::draw() {}
 
-void ofApp::keyReleased(int key) {
-    switch (key) {
-        case '1':
-            pixelPusher.setColor(ofColor::red);
-            break;
-        case '2':
-            pixelPusher.setColor(ofColor::green);
-            break;
-        case '3':
-            pixelPusher.setColor(ofColor::blue);
-            break;
-        case '4':
-            pixelPusher.setColor(ofColor::white);
-            break;
-        case '5':
-            pixelPusher.setColor(ofColor::black);
-            break;
-        case '6':
-            for (int i = 0; i < 256; i++) {
-                pixelPusher.setColor(2, 1, 0, i, ofColor::red);
-                ofSleepMillis(1);
-            }
-            break;
-        case '7':
-            for (int i = 0; i < 256; i++) {
-                pixelPusher.setColor(2, 1, 0, i, ofColor::green);
-                ofSleepMillis(1);
-            }
-            break;
-        case '8':
-            for (int i = 0; i < 256; i++) {
-                pixelPusher.setColor(2, 1, 0, i, ofColor::blue);
-                ofSleepMillis(1);
-            }
-            break;
+void ofApp::fade(ofColor color, int delay) {
+    for (float rate = 0; rate < 1; rate += 0.01) {
+        pixelPusher.setColor(color, rate);
+        ofSleepMillis(delay);
     }
+    pixelPusher.setColor(color, 1);
+    for (float rate = 1; rate > 0; rate -= 0.01) {
+        pixelPusher.setColor(color, rate);
+        ofSleepMillis(delay);
+    }
+    pixelPusher.setColor(color, 0);
 }
