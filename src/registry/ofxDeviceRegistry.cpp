@@ -101,7 +101,7 @@ void ofxDeviceRegistry::threadedUpdate() {
 void ofxDeviceRegistry::addNewPixelPusher(string macAddress, PixelPusher *pixelPusher) {
     mtx.lock();
 
-    ofLogNotice("ofxDeviceRegistry::addNewPixelPusher") << "{\"header\":" << pixelPusher->getHeaderDescription() << ",\"body\":" << pixelPusher->str() << "}";
+    ofLogNotice("ofxDeviceRegistry") << "{\"header\":" << pixelPusher->getHeaderDescription() << ",\"body\":" << pixelPusher->str() << "}";
     pushers.push_back(pixelPusher);
     sort(pushers.begin(), pushers.end());
 
@@ -120,7 +120,7 @@ void ofxDeviceRegistry::addNewPixelPusher(string macAddress, PixelPusher *pixelP
 void ofxDeviceRegistry::updatePixelPusher(string macAddress, PixelPusher *pixelPusher) {
     mtx.lock();
 
-    ofLogVerbose("ofxDeviceRegistry::updatePixelPusher") << "{\"header\":" << pixelPusher->getHeaderDescription() << ",\"body\":" << pixelPusher->str() << "}";
+    ofLogVerbose("ofxDeviceRegistry") << "{\"header\":" << pixelPusher->getHeaderDescription() << ",\"body\":" << pixelPusher->str() << "}";
     pusherMap[macAddress]->updateProperty(pixelPusher);
 
     mtx.unlock();
